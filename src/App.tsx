@@ -1,7 +1,3 @@
-import Navbar from "./components/Navbar/Navbar";
-import Footer from "./components/Footer/Footer";
-import WhatsAppButton from "./components/FloatingButtons/WhatsAppButton";
-import ScrollTopButton from "./components/FloatingButtons/ScrollTopButton";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import QuienesSomos from "./modules/QuienesSomos";
 import Equipo from "./modules/Equipo";
