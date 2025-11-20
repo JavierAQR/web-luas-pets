@@ -10,6 +10,8 @@ import Vacunacion from "./modules/Vacunacion"
 import BanoCorte from "./modules/BanoCorte";
 import Contacto from "./modules/Contacto"
 import Home from "./modules/Home/Home";
+import Login from "./modules/Auth/Login";
+import Register from "./modules/Auth/Register";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/quienes-somos" element={<QuienesSomos />} />
         <Route path="/equipo" element={<Equipo />} />
         <Route path="/consulta" element={<Consulta />} />

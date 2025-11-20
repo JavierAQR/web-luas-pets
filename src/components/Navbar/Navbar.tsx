@@ -1,25 +1,22 @@
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
-import { FaPaw, FaBone, FaSyringe, FaCut } from "react-icons/fa";
+import { Link, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
+import { useAuthStore } from "../../stores/authStore";
+import toast from "react-hot-toast";
 
-const Navbar: React.FC = () => {
-  const [openMenu, setOpenMenu] = useState<string | null>(null);
-
-  const toggleMenu = (menu: string) => {
-    setOpenMenu(openMenu === menu ? null : menu);
-  };
+const Navbar = () => {
+  const navigate = useNavigate();
+  const { user, isAuthenticated, logout, hydrateFromStorage } = useAuthStore();
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (!target.closest(".navbar") && !target.closest(".dropdown-global")) {
-        setOpenMenu(null);
-      }
-    };
+    // hidrata solo una vez al montar el navbar (o hazlo en el App)
+    hydrateFromStorage();
+  }, [hydrateFromStorage]);
 
-    document.addEventListener("click", handleClickOutside);
-    return () => document.removeEventListener("click", handleClickOutside);
-  }, []);
+  const handleLogout = async () => {
+    await logout();
+    navigate("/");
+    toast.success("Cerraste sesión correctamente.")
+  };
 
   return (
     <div className="relative">
@@ -43,137 +40,41 @@ const Navbar: React.FC = () => {
           </div>
         </div>
 
-        {/* Menú */}
-        <ul className="navbar-menu flex list-none items-center gap-6 md:gap-8">
-          <li>
-            <Link
-              to="/"
-              className="text-[#0b2f66] font-semibold text-lg pb-1 border-b-4 border-transparent transition-colors transition-border duration-300 hover:text-[#E91E63] hover:border-[#E91E63]"
-            >
-              Inicio
-            </Link>
-          </li>
-
-          <li>
-            <button
-              onClick={() => toggleMenu("nosotros")}
-              className={`text-[#0b2f66] font-semibold text-lg pb-1 border-b-4 border-transparent transition-colors duration-300 hover:text-[#E91E63] hover:border-[#E91E63] flex items-center ${
-                openMenu === "nosotros" ? "text-[#E91E63] border-[#E91E63]" : ""
-              }`}
-            >
-              Nosotros
-              <span
-                className={`arrow ml-1 inline-block transition-transform duration-300 ${
-                  openMenu === "nosotros" ? "rotate-180" : ""
-                }`}
+        {/* Auth actions */}
+        <div className="flex items-center gap-4">
+          {!isAuthenticated ? (
+            <>
+              <Link
+                to="/login"
+                className="text-sm md:text-base font-medium text-[#0D47A1] hover:text-[#E91E63] transition-colors"
               >
-                ▼
-              </span>
-            </button>
-          </li>
-
-          <li>
-            <button
-              onClick={() => toggleMenu("servicios")}
-              className={`text-[#0b2f66] font-semibold text-lg pb-1 border-b-4 border-transparent transition-colors duration-300 hover:text-[#E91E63] hover:border-[#E91E63] flex items-center ${
-                openMenu === "servicios" ? "text-[#E91E63] border-[#E91E63]" : ""
-              }`}
-            >
-              Servicios
-              <span
-                className={`arrow ml-1 inline-block transition-transform duration-300 ${
-                  openMenu === "servicios" ? "rotate-180" : ""
-                }`}
+                Iniciar sesión
+              </Link>
+              <Link
+                to="/register"
+                className="text-sm md:text-base font-semibold bg-[#E91E63] text-white px-4 py-2 rounded-full hover:bg-[#d81b60] transition-colors"
               >
-                ▼
+                Registrarse
+              </Link>
+            </>
+          ) : (
+            <div className="flex items-center gap-3">
+              <span className="hidden md:inline text-sm text-gray-700">
+                Hola,{" "}
+                <span className="font-semibold">
+                  {user?.name} {user?.lastname}
+                </span>
               </span>
-            </button>
-          </li>
-
-          <li>
-            <Link
-              to="/contacto"
-              className="text-[#0b2f66] font-semibold text-lg pb-1 border-b-4 border-transparent transition-colors duration-300 hover:text-[#E91E63] hover:border-[#E91E63]"
-            >
-              Contacto
-            </Link>
-          </li>
-        </ul>
+              <button
+                onClick={handleLogout}
+                className="text-sm md:text-base font-medium bg-gray-100 text-gray-800 px-4 py-2 rounded-full hover:bg-gray-200 transition-colors"
+              >
+                Cerrar sesión
+              </button>
+            </div>
+          )}
+        </div>
       </nav>
-
-      {/* Dropdown Nosotros */}
-      {openMenu === "nosotros" && (
-        <div
-          className="dropdown-global absolute left-1/2 top-[115px] z-999 w-full max-w-[1270px] -translate-x-1/2 bg-white shadow-lg rounded-lg px-6 md:px-10 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0 animate-[fadeInDropdown_0.4s_ease_forwards]"
-        >
-          <Link
-            to="/quienes-somos"
-            className="dropdown-item bg-white rounded-lg p-5 shadow-md flex items-start gap-3 no-underline text-[#0b2f66] transition-colors duration-300 hover:bg-[#f5f5f5]"
-          >
-            <FaPaw className="icon text-[26px] text-[#E91E63]" />
-            <div>
-              <h4 className="m-0 text-xl font-bold">Quiénes somos</h4>
-              <p className="m-0 text-base text-[#666]">
-                Nuestra motivación y pilares.
-              </p>
-            </div>
-          </Link>
-          <Link
-            to="/equipo"
-            className="dropdown-item bg-white rounded-lg p-5 shadow-md flex items-start gap-3 no-underline text-[#0b2f66] transition-colors duration-300 hover:bg-[#f5f5f5]"
-          >
-            <FaBone className="icon text-[26px] text-[#E91E63]" />
-            <div>
-              <h4 className="m-0 text-xl font-bold">Nuestro equipo</h4>
-              <p className="m-0 text-base text-[#666]">
-                Profesionales dedicados.
-              </p>
-            </div>
-          </Link>
-        </div>
-      )}
-
-      {/* Dropdown Servicios */}
-      {openMenu === "servicios" && (
-        <div
-          className="dropdown-global wide absolute left-1/2 top-[115px] z-999 w-full max-w-[1270px] -translate-x-1/2 bg-white shadow-lg rounded-lg px-6 md:px-10 py-6 grid grid-cols-1 md:grid-cols-3 gap-6 opacity-0 animate-[fadeInDropdown_0.4s_ease_forwards]"
-        >
-          <Link
-            to="/consulta"
-            className="dropdown-item bg-white rounded-lg p-5 shadow-md flex items-start gap-3 no-underline text-[#0b2f66] transition-colors duration-300 hover:bg-[#f5f5f5]"
-          >
-            <FaPaw className="icon text-[26px] text-[#E91E63]" />
-            <div>
-              <h4 className="m-0 text-xl font-bold">Consultas</h4>
-              <p className="m-0 text-base text-[#666]">
-                Atención integral para tu mascota.
-              </p>
-            </div>
-          </Link>
-          <Link
-            to="/vacunacion"
-            className="dropdown-item bg-white rounded-lg p-5 shadow-md flex items-start gap-3 no-underline text-[#0b2f66] transition-colors duration-300 hover:bg-[#f5f5f5]"
-          >
-            <FaSyringe className="icon text-[26px] text-[#E91E63]" />
-            <div>
-              <h4 className="m-0 text-xl font-bold">Vacunación</h4>
-              <p className="m-0 text-base text-[#666]">
-                Protección completa para su salud.
-              </p>
-            </div>
-          </Link>
-          <Link
-            to="/bano-corte"
-            className="dropdown-item bg-white rounded-lg p-5 shadow-md flex items-start gap-3 no-underline text-[#0b2f66] transition-colors duration-300 hover:bg-[#f5f5f5]"
-          >
-            <FaCut className="icon text-[26px] text-[#E91E63]" />
-            <div>
-              <h4 className="m-0 text-xl font-bold">Baño y corte</h4>
-              <p className="m-0 text-base text-[#666]">Estética y bienestar.</p>
-            </div>
-          </Link>
-        </div>
-      )}
     </div>
   );
 };
