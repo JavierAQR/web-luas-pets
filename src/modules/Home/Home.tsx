@@ -44,36 +44,39 @@ const Home: React.FC = () => {
   return (
     <div className="font-[Poppins]">
       {/* Hero */}
-      <section className="flex flex-wrap items-center justify-between bg-[#FCE4EC] py-16 px-6 md:px-10 rounded-xl gap-8">
-        <div className="max-w-xl space-y-4">
-          <h1 className="text-4xl md:text-5xl font-bold text-[#0a2d63]">
-            Atención Veterinaria 24/7
-          </h1>
-          <p className="font-semibold text-[#E91E63]">
-            Saludable desde la nariz hasta la cola
-          </p>
-          <p className="text-lg">
-            Cuidado especializado y la más alta tecnología para tu mascota en un
-            solo lugar.
-          </p>
+      <section className="flex flex-wrap items-center justify-center md:justify-between bg-[#FCE4EC] py-16 px-6 md:px-14 rounded-xl gap-10">
+  <div className="max-w-xl space-y-4 text-center md:text-left mx-auto">
+    <h1 className="text-4xl md:text-5xl font-bold text-[#0a2d63]">
+      Atención Veterinaria 24/7
+    </h1>
+    <p className="font-semibold text-[#E91E63]">
+      Saludable desde la nariz hasta la cola
+    </p>
+    <p className="text-lg">
+      Cuidado especializado y la más alta tecnología para tu mascota en un
+      solo lugar.
+    </p>
 
-          <button
-            className="inline-flex items-center gap-3 bg-[#E91E63] text-white py-3.5 px-6 text-lg rounded-lg border-none cursor-pointer transition duration-300 hover:bg-[#C2185B] hover:scale-105"
-            onClick={() => window.open("https://wa.me/51968328872", "_blank")}
-          >
-            <FaCalendarAlt />
-            Reserva tu cita
-          </button>
-        </div>
+    <div className="flex justify-center md:justify-start">
+      <button
+        className="inline-flex items-center gap-3 bg-[#E91E63] text-white py-3.5 px-6 text-lg rounded-lg transition duration-300 hover:bg-[#C2185B] hover:scale-105"
+        onClick={() => window.open("https://wa.me/51968328872", "_blank")}
+      >
+        <FaCalendarAlt />
+        Reserva tu cita
+      </button>
+    </div>
+  </div>
 
-        <div className="flex justify-center w-full md:w-auto">
-          <img
-            src="/hero-mascota.png"
-            alt="Mascota feliz"
-            className="max-w-xs sm:max-w-sm md:max-w-md rounded-2xl"
-          />
-        </div>
-      </section>
+  <div className="flex justify-center w-full md:w-auto">
+    <img
+      src="/hero-mascota.png"
+      alt="Mascota feliz"
+      className="max-w-xs sm:max-w-sm md:max-w-md rounded-2xl"
+    />
+  </div>
+</section>
+
 
 
       <section className="text-center my-16">

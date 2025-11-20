@@ -7,6 +7,7 @@ export interface AuthUser {
   lastname: string;
   email: string;
   phoneNumber?: string | null;
+  role?: "ADMIN" | "USER"; 
 }
 
 interface AuthState {
@@ -20,7 +21,7 @@ interface AuthState {
 
 const STORAGE_KEY = "luaspets_auth";
 
-export const useAuthStore = create<AuthState>((set, get) => ({
+export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
   isAuthenticated: false,
