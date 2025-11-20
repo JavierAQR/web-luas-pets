@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { FiLogOut, FiMenu, FiX } from "react-icons/fi";
 import { FaPaw } from "react-icons/fa";
 import { useAuthStore } from "../../../stores/authStore";
@@ -8,13 +8,14 @@ import toast from "react-hot-toast";
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const { user, logout } = useAuthStore();
+  const navigate = useNavigate();
 
   const toggleSidebar = () => setIsOpen((prev) => !prev);
 
   const handleLogout = async () => {
     await logout();
     toast.success("Cerraste sesión correctamente.")
-    window.location.href = "/login";
+    navigate("/login")
   };
 
   return (
