@@ -2,14 +2,16 @@ import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import WhatsAppButton from "./components/FloatingButtons/WhatsAppButton";
 import ScrollTopButton from "./components/FloatingButtons/ScrollTopButton";
-import Home from "./pages/Home";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import QuienesSomos from "./pages/QuienesSomos";
-import Equipo from "./pages/Equipo";
-import Consulta from "./pages/Consulta"
-import Vacunacion from "./pages/Vacunacion"
-import BanoCorte from "./pages/BanoCorte";
-import Contacto from "./pages/Contacto"
+import QuienesSomos from "./modules/QuienesSomos";
+import Equipo from "./modules/Equipo";
+import Consulta from "./modules/Consulta"
+import Vacunacion from "./modules/Vacunacion"
+import BanoCorte from "./modules/BanoCorte";
+import Contacto from "./modules/Contacto"
+import Home from "./modules/Home/Home";
+import Login from "./modules/Auth/Login";
+import Register from "./modules/Auth/Register";
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         <Route path="/quienes-somos" element={<QuienesSomos />} />
         <Route path="/equipo" element={<Equipo />} />
         <Route path="/consulta" element={<Consulta />} />
