@@ -1,0 +1,142 @@
+/* Estilos generales */
+.quienes-somos {
+  font-family: 'Poppins', sans-serif;
+  color: #0b0a63;
+  line-height: 1.6;
+}
+
+/* Hero */
+.qs-hero {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #FCE4EC; /* Fondo rosado claro */
+  padding: 60px 40px;
+  border-radius: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 50px;
+}
+
+.qs-text {
+  max-width: 500px;
+}
+
+.qs-text h1 {
+  font-size: 42px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.qs-text p {
+  font-size: 18px;
+  color: #333;
+}
+
+.qs-image img {
+  max-width: 400px;
+  border-radius: 16px;
+}
+
+/* Misión */
+.qs-mision {
+  max-width: 900px;
+  margin: 0 auto 60px auto;
+  text-align: left;
+}
+
+.qs-mision h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.qs-mision p {
+  font-size: 18px;
+  margin-bottom: 15px;
+}
+
+.qs-mision strong {
+  color: #E91E63; /* Color corporativo para énfasis */
+}
+
+/* Pilares */
+.qs-pilares {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.pilar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #f9f9f9;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  flex-wrap: wrap;
+}
+
+.pilar.reverse {
+  flex-direction: row-reverse;
+}
+
+.pilar-text {
+  flex: 1;
+  padding: 20px;
+}
+
+.pilar-text h3 {
+  font-size: 16px;
+  color: #E91E63;
+  margin-bottom: 8px;
+}
+
+.pilar-text h4 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 15px;
+}
+
+.pilar-text p {
+  font-size: 18px;
+  color: #333;
+}
+
+.pilar-text strong {
+  color: #0a2d63;
+}
+
+.pilar-img img {
+  max-width: 350px;
+  border-radius: 12px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .qs-hero {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .qs-image img {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+
+  .pilar {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .pilar.reverse {
+    flex-direction: column;
+  }
+
+  .pilar-img img {
+    max-width: 100%;
+    margin-top: 20px;
+  }
+}

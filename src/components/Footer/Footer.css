@@ -1,0 +1,100 @@
+.footer {
+  background-color: #E91E63; /* Rosado corporativo */
+  color: #fff;
+  padding: 40px 20px;
+  font-family: 'Poppins', sans-serif;
+  opacity: 0; /* Oculto al inicio */
+  animation: fadeInFooter 0.8s ease forwards; /* Animación al cargar */
+}
+
+@keyframes fadeInFooter {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.footer-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section h3 {
+  font-size: 20px;
+  margin-bottom: 15px;
+  font-weight: 600;
+}
+
+.footer-section p {
+  margin: 8px 0;
+  font-size: 16px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: color 0.3s ease;
+}
+
+.footer-section p svg {
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+/* Hover en íconos y texto */
+.footer-section p:hover {
+  color: #FDD835; /* Amarillo cálido en hover */
+}
+
+.footer-section p:hover svg {
+  color: #FDD835;
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  font-size: 14px;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 15px;
+}
+
+/* Responsivo */
+@media (max-width: 768px) {
+  .footer-container {
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+  .footer-section p {
+    justify-content: center;
+  }
+}
+
+
+.footer-section a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
+  font-size: 16px;
+  margin: 8px 0;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover {
+  color: #FDD835; /* Amarillo cálido en hover */
+}
+
+.footer-section a svg {
+  font-size: 18px;
+  transition: color 0.3s ease;
+}
+
+.footer-section a:hover svg {
+  color: #FDD835;
+}
