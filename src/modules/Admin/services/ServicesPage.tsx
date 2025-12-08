@@ -210,7 +210,7 @@ const ServicesPage = () => {
               </h1>
             </div>
             <p className="text-pink-100">
-              Administra los servicios de  clínica veterinaria
+              Administra los servicios de la clínica veterinaria
             </p>
           </div>
           <button

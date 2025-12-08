@@ -12,6 +12,7 @@ import AdminLayout from "./modules/Admin/layout/AdminLayout";
 import ServicesPage from "./modules/Admin/services/ServicesPage";
 import PublicLayout from "./components/PublicLayout";
 import ProductsPage from "./modules/Admin/products/ProductsPage";
+import AppointmentsPage from "./modules/Admin/appointments/AppointmentsPage";
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
         <Route path="/admin" element={<AdminLayout />}>
           <Route path="services" element={<ServicesPage />} />
           <Route path="products" element={<ProductsPage />} />
+          <Route path="appointments" element={<AppointmentsPage/>}/>
         </Route>
       </Routes>
     </Router>
