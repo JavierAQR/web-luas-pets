@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/authStore";
 import toast from "react-hot-toast";
-import { Calendar, LogOut, Menu, Package, Sparkles, X } from "lucide-react";
+import { Calendar, LayoutDashboard, LogOut, Menu, Package, Sparkles, X } from "lucide-react";
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -93,6 +93,31 @@ const AdminSidebar = () => {
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1.5">
+          <NavLink
+              to="/admin/dashboard"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group
+                ${
+                  isActive
+                    ? "bg-linear-to-r from-[#E91E63] to-[#C2185B] text-white shadow-md shadow-[#E91E63]/30"
+                    : "text-gray-700 hover:bg-gray-100 hover:translate-x-1"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <LayoutDashboard 
+                    size={20} 
+                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  />
+                  <span>Dashboard</span>
+                  {isActive && (
+                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white"></div>
+                  )}
+                </>
+              )}
+            </NavLink>
           <NavLink
               to="/admin/appointments"
               onClick={() => setIsOpen(false)}
