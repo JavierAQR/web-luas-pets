@@ -22,7 +22,7 @@ const AdminSidebar = () => {
       {/* Botón hamburguesa móvil */}
       <button
         onClick={toggleSidebar}
-        className={`md:hidden fixed top-4 left-4 z-50 bg-white hover:bg-gray-50 rounded-xl shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${isOpen && "hidden"}`}
+        className={`md:hidden fixed w-full bg-white hover:bg-gray-50 shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${isOpen && "hidden"}`}
         aria-label="Abrir menú"
       >
         <Menu size={24} className="text-gray-700" />
@@ -38,7 +38,7 @@ const AdminSidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-0 left-0 h-screen w-72 bg-white border-r border-gray-200 z-40 transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 h-screen w-72 bg-white border-r border-gray-200 z-40 transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
         <div className="flex flex-col h-full">
