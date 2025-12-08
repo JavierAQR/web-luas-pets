@@ -14,6 +14,7 @@ interface AuthState {
   user: AuthUser | null;
   token: string | null;
   isAuthenticated: boolean;
+  isHydrated: boolean;
   setAuth: (user: AuthUser, token: string) => void;
   logout: () => Promise<void>;
   hydrateFromStorage: () => void;
@@ -25,31 +26,33 @@ export const useAuthStore = create<AuthState>((set) => ({
   user: null,
   token: null,
   isAuthenticated: false,
+  isHydrated: false,
 
   setAuth: (user, token) => {
-    // guardar en estado
     set({ user, token, isAuthenticated: true });
-
-    // guardar en localStorage
-    const payload = JSON.stringify({ user, token });
-    localStorage.setItem(STORAGE_KEY, payload);
+    localStorage.setItem("luaspets_auth", JSON.stringify({ user, token }));
   },
 
   hydrateFromStorage: () => {
     try {
-      const raw = localStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
+      const raw = localStorage.getItem("luaspets_auth");
 
-      const parsed = JSON.parse(raw) as { user: AuthUser; token: string };
-      set({
-        user: parsed.user,
-        token: parsed.token,
-        isAuthenticated: true,
-      });
+      if (raw) {
+        const parsed = JSON.parse(raw);
+        set({
+          user: parsed.user,
+          token: parsed.token,
+          isAuthenticated: true,
+          isHydrated: true,
+        });
+      } else {
+        set({ isHydrated: true });
+      }
 
     } catch (err) {
       console.error("Error hydrating auth store:", err);
-      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem("luaspets_auth");
+      set({ isHydrated: true });
     }
   },
 

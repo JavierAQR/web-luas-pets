@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/authStore";
 import toast from "react-hot-toast";
-import { LogOut, Menu, Package, Sparkles, X } from "lucide-react";
+import { Calendar, LayoutDashboard, LogOut, Menu, Package, Sparkles, X } from "lucide-react";
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +22,7 @@ const AdminSidebar = () => {
       {/* Botón hamburguesa móvil */}
       <button
         onClick={toggleSidebar}
-        className={`md:hidden fixed top-4 left-4 z-50 bg-white hover:bg-gray-50 rounded-xl shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${isOpen && "hidden"}`}
+        className={`md:hidden fixed w-full bg-white hover:bg-gray-50 shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${isOpen && "hidden"}`}
         aria-label="Abrir menú"
       >
         <Menu size={24} className="text-gray-700" />
@@ -38,7 +38,7 @@ const AdminSidebar = () => {
 
       {/* Sidebar */}
       <aside
-        className={`fixed md:static top-0 left-0 h-screen w-72 bg-white border-r border-gray-200 z-40 transform transition-transform duration-300 ease-in-out
+        className={`fixed top-0 left-0 h-screen w-72 bg-white border-r border-gray-200 z-40 transform transition-transform duration-300 ease-in-out
           ${isOpen ? "translate-x-0" : "-translate-x-full md:translate-x-0"}`}
       >
         <div className="flex flex-col h-full">
@@ -93,6 +93,56 @@ const AdminSidebar = () => {
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1.5">
+          <NavLink
+              to="/admin/dashboard"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group
+                ${
+                  isActive
+                    ? "bg-linear-to-r from-[#E91E63] to-[#C2185B] text-white shadow-md shadow-[#E91E63]/30"
+                    : "text-gray-700 hover:bg-gray-100 hover:translate-x-1"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <LayoutDashboard 
+                    size={20} 
+                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  />
+                  <span>Dashboard</span>
+                  {isActive && (
+                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white"></div>
+                  )}
+                </>
+              )}
+            </NavLink>
+          <NavLink
+              to="/admin/appointments"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group
+                ${
+                  isActive
+                    ? "bg-linear-to-r from-[#E91E63] to-[#C2185B] text-white shadow-md shadow-[#E91E63]/30"
+                    : "text-gray-700 hover:bg-gray-100 hover:translate-x-1"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                  <Calendar 
+                    size={20} 
+                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  />
+                  <span>Citas</span>
+                  {isActive && (
+                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white"></div>
+                  )}
+                </>
+              )}
+            </NavLink>
             <NavLink
               to="/admin/services"
               onClick={() => setIsOpen(false)}
