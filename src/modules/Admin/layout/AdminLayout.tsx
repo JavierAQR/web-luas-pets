@@ -8,19 +8,22 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
-  const { user, isAuthenticated, hydrateFromStorage } = useAuthStore();
+  const { user, isAuthenticated, isHydrated, hydrateFromStorage } = useAuthStore();
   const location = useLocation();
 
   useEffect(() => {
     hydrateFromStorage();
-  }, [hydrateFromStorage]);
+  }, []);
 
   const isAdmin = isAuthenticated && user?.role === "ADMIN";
+
+  if (!isHydrated) {
+    return <div>Cargando...</div>; 
+  }
 
   if (!isAdmin) {
     return <Navigate to="/login" state={{ from: location }} replace />;
   }
-
   return (
     <div className="min-h-screen flex bg-linear-to-br from-gray-50 to-gray-100">
       <AdminSidebar />
