@@ -58,12 +58,21 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-3">
-            <Link
-              to="servicios"
+            <a
+              href="/#servicios"
               className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
             >
               Servicios
-            </Link>
+            </a>
+
+            {isAuthenticated && !isAdmin && (
+              <Link
+                to="/my-appointments"
+                className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+              >
+                Mis Citas
+              </Link>
+            )}
 
             {isAuthenticated && isAdmin && (
               <Link
@@ -146,6 +155,16 @@ const Navbar = () => {
           >
             Servicios
           </a>
+
+          {isAuthenticated && !isAdmin && (
+            <Link
+              to="/my-appointments"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+            >
+              Mis Citas
+            </Link>
+          )}
 
           {isAuthenticated && (
             <div className="flex items-center gap-3 p-3 bg-linear-to-r from-[#E91E63]/5 to-[#C2185B]/5 rounded-xl border border-[#E91E63]/20">
