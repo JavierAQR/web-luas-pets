@@ -58,6 +58,13 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-3">
+            <Link
+              to="servicios"
+              className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+            >
+              Servicios
+            </Link>
+
             {isAuthenticated && isAdmin && (
               <Link
                 to="/admin/dashboard"
@@ -132,6 +139,14 @@ const Navbar = () => {
         }`}
       >
         <div className="px-4 pb-4 pt-2 space-y-3 bg-white border-t border-gray-100">
+          <a
+            href="/#servicios"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+          >
+            Servicios
+          </a>
+
           {isAuthenticated && (
             <div className="flex items-center gap-3 p-3 bg-linear-to-r from-[#E91E63]/5 to-[#C2185B]/5 rounded-xl border border-[#E91E63]/20">
               <div className="w-12 h-12 rounded-full bg-linear-to-br from-[#E91E63] to-[#C2185B] flex items-center justify-center text-white font-bold text-lg">

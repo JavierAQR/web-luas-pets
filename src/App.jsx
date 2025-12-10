@@ -14,6 +14,7 @@ import PublicLayout from "./components/PublicLayout";
 import ProductsPage from "./modules/Admin/products/ProductsPage";
 import AppointmentsPage from "./modules/Admin/appointments/AppointmentsPage";
 import DashboardPage from "./modules/Admin/dashboard/DashboardPage";
+import ServicesSection from "./modules/Home/ServiceSection";
 
 function App() {
   return (
@@ -29,6 +30,8 @@ function App() {
           <Route path="/vacunacion" element={<Vacunacion />} />
           <Route path="/bano-corte" element={<BanoCorte />} />
           <Route path="/contacto" element={<Contacto />} />
+
+          <Route path="/servicios" element={<ServicesSection />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
