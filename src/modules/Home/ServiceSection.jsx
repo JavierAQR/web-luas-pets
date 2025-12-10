@@ -53,7 +53,7 @@ const ServicesSection = () => {
   
     if (loading) {
       return (
-        <section className="py-16 bg-white" id="servicios">
+        <section className="pt-24 pb-16" id="servicios">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex flex-col items-center justify-center py-16">
               <Loader2 className="animate-spin text-[#E91E63] mb-4" size={40} />
@@ -66,7 +66,7 @@ const ServicesSection = () => {
   
     if (error) {
       return (
-        <section className="py-16 bg-white" id="servicios">
+        <section className="pt-24 pb-16" id="servicios">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="flex items-center justify-center gap-3 rounded-xl bg-red-50 border border-red-200 text-red-700 px-4 py-3">
               <AlertCircle size={20} />
@@ -78,7 +78,7 @@ const ServicesSection = () => {
     }
   
     return (
-      <section className="py-16 bg-gray-50" id="servicios">
+      <section className="pt-24 pb-16 bg-gray-50" id="servicios">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Header */}
           <div className="text-center mb-12">
