@@ -8,7 +8,9 @@ export default function PublicLayout() {
   return (
     <>
       <Navbar />
+      <main className="min-h-screen bg-[#f9fbfa]">
       <Outlet />
+      </main>
       <Footer />
       <WhatsAppButton />
       <ScrollTopButton />

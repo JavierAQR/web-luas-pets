@@ -58,20 +58,28 @@ const Navbar = () => {
 
           {/* Desktop Navigation */}
           <div className="hidden md:flex items-center gap-3">
-            <a
-              href="/#servicios"
+            <Link
+              to="servicios"
               className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
             >
               Servicios
-            </a>
+            </Link>
 
             {isAuthenticated && !isAdmin && (
-              <Link
-                to="/my-appointments"
-                className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
-              >
-                Mis Citas
-              </Link>
+              <>
+                <Link
+                  to="/my-pets"
+                  className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+                >
+                  Mis Mascotas
+                </Link>
+                <Link
+                  to="/my-appointments"
+                  className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+                >
+                  Mis Citas
+                </Link>
+              </>
             )}
 
             {isAuthenticated && isAdmin && (
@@ -157,13 +165,22 @@ const Navbar = () => {
           </a>
 
           {isAuthenticated && !isAdmin && (
-            <Link
-              to="/my-appointments"
-              onClick={() => setIsMobileMenuOpen(false)}
-              className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
-            >
-              Mis Citas
-            </Link>
+            <>
+              <Link
+                to="/my-pets"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+              >
+                Mis Mascotas
+              </Link>
+              <Link
+                to="/my-appointments"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+              >
+                Mis Citas
+              </Link>
+            </>
           )}
 
           {isAuthenticated && (

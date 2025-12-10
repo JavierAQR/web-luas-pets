@@ -17,6 +17,8 @@ import DashboardPage from "./modules/Admin/dashboard/DashboardPage";
 import ServicesSection from "./modules/Home/ServiceSection";
 import MyAppointmentsPage from "./modules/User/appointments/MyAppointmentsPage";
 import NewAppointmentPage from "./modules/User/appointments/NewAppointmentPage";
+import MyPetsPage from "./modules/User/pets/MyPetsPage";
+import PetFormPage from "./modules/User/pets/PetFormPage";
 
 function App() {
   return (
@@ -36,6 +38,9 @@ function App() {
           <Route path="/servicios" element={<ServicesSection />} />
           <Route path="/my-appointments" element={<MyAppointmentsPage />} />
           <Route path="/appointments/new" element={<NewAppointmentPage />} />
+          <Route path="/my-pets" element={<MyPetsPage />} />
+          <Route path="/pets/new" element={<PetFormPage />} />
+          <Route path="/pets/edit/:id" element={<PetFormPage />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
