@@ -203,7 +203,7 @@ const MyAppointmentsPage = () => {
                     <div className="flex items-center gap-2 text-sm text-gray-700">
                       <Clock size={16} className="text-gray-400" />
                       <span className="font-medium">
-                        {appointment.startTime}
+                        {formatTime(appointment.date)}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-sm text-gray-700">
