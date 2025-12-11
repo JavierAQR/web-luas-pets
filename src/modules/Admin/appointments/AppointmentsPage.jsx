@@ -16,6 +16,7 @@ import {
   XCircle,
 } from "lucide-react";
 import toast from "react-hot-toast";
+import { formatDate, formatTime } from "../../../utils/format";
 
 const AppointmentsPage = () => {
   const [appointments, setAppointments] = useState([]);
@@ -163,25 +164,6 @@ const AppointmentsPage = () => {
       },
     };
     return configs[status];
-  };
-
-  const formatDate = (dateStr) => {
-    const date = new Date(dateStr);
-    return new Intl.DateTimeFormat("es-PE", {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    }).format(date);
-  };
-
-  const formatTime = (dateStr) => {
-    const date = new Date(dateStr);
-    return new Intl.DateTimeFormat("es-PE", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: true,
-    }).format(date);
   };
 
   const clearFilters = () => {

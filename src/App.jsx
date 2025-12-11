@@ -14,6 +14,11 @@ import PublicLayout from "./components/PublicLayout";
 import ProductsPage from "./modules/Admin/products/ProductsPage";
 import AppointmentsPage from "./modules/Admin/appointments/AppointmentsPage";
 import DashboardPage from "./modules/Admin/dashboard/DashboardPage";
+import ServicesSection from "./modules/Home/ServiceSection";
+import MyAppointmentsPage from "./modules/User/appointments/MyAppointmentsPage";
+import NewAppointmentPage from "./modules/User/appointments/NewAppointmentPage";
+import MyPetsPage from "./modules/User/pets/MyPetsPage";
+import PetFormPage from "./modules/User/pets/PetFormPage";
 
 function App() {
   return (
@@ -29,6 +34,13 @@ function App() {
           <Route path="/vacunacion" element={<Vacunacion />} />
           <Route path="/bano-corte" element={<BanoCorte />} />
           <Route path="/contacto" element={<Contacto />} />
+
+          <Route path="/servicios" element={<ServicesSection />} />
+          <Route path="/my-appointments" element={<MyAppointmentsPage />} />
+          <Route path="/appointments/new" element={<NewAppointmentPage />} />
+          <Route path="/my-pets" element={<MyPetsPage />} />
+          <Route path="/pets/new" element={<PetFormPage />} />
+          <Route path="/pets/edit/:id" element={<PetFormPage />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>
