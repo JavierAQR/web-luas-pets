@@ -86,6 +86,12 @@ const Navbar = () => {
                   Mis Citas
                 </Link>
                 <Link
+                  to="/my-orders"
+                  className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+                >
+                  Mis Órdenes
+                </Link>
+                <Link
                   to="/cart"
                   className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors"
                 >
@@ -198,6 +204,13 @@ const Navbar = () => {
                 className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
               >
                 Mis Citas
+              </Link>
+              <Link
+                to="/my-orders"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+              >
+                Mis Órdenes
               </Link>
               <Link
                 to="/cart"
