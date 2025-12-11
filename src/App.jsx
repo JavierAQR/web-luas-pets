@@ -19,6 +19,9 @@ import MyAppointmentsPage from "./modules/User/appointments/MyAppointmentsPage";
 import NewAppointmentPage from "./modules/User/appointments/NewAppointmentPage";
 import MyPetsPage from "./modules/User/pets/MyPetsPage";
 import PetFormPage from "./modules/User/pets/PetFormPage";
+import ProductsSection from "./modules/Home/ProductsSection";
+import CartPage from "./modules/User/cart/CartPage";
+import CheckoutPage from "./modules/User/checkout/CheckoutPage";
 
 function App() {
   return (
@@ -41,6 +44,9 @@ function App() {
           <Route path="/my-pets" element={<MyPetsPage />} />
           <Route path="/pets/new" element={<PetFormPage />} />
           <Route path="/pets/edit/:id" element={<PetFormPage />} />
+          <Route path="/productos" element={<ProductsSection />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/checkout" element={<CheckoutPage />} />
         </Route>
 
         <Route path="/admin" element={<AdminLayout />}>

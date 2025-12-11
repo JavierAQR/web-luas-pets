@@ -2,7 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { useAuthStore } from "../../stores/authStore";
 import toast from "react-hot-toast";
-import { LogOut, Menu, Shield, UserCircle, X } from "lucide-react";
+import { LogOut, Menu, Shield, ShoppingCart, UserCircle, X } from "lucide-react";
 
 const Navbar = () => {
   const navigate = useNavigate();
@@ -64,6 +64,12 @@ const Navbar = () => {
             >
               Servicios
             </Link>
+            <Link
+              to="productos"
+              className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
+            >
+              Productos
+            </Link>
 
             {isAuthenticated && !isAdmin && (
               <>
@@ -78,6 +84,12 @@ const Navbar = () => {
                   className="text-sm font-medium text-gray-700 hover:text-[#E91E63] transition-colors px-3 py-2"
                 >
                   Mis Citas
+                </Link>
+                <Link
+                  to="/cart"
+                  className="relative p-2 rounded-xl hover:bg-gray-100 transition-colors"
+                >
+                  <ShoppingCart size={22} className="text-gray-700" />
                 </Link>
               </>
             )}
@@ -156,13 +168,20 @@ const Navbar = () => {
         }`}
       >
         <div className="px-4 pb-4 pt-2 space-y-3 bg-white border-t border-gray-100">
-          <a
-            href="/#servicios"
+          <Link
+            to="servicios"
             onClick={() => setIsMobileMenuOpen(false)}
             className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
           >
             Servicios
-          </a>
+          </Link>
+          <Link
+            to="productos"
+            onClick={() => setIsMobileMenuOpen(false)}
+            className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+          >
+            Productos
+          </Link>
 
           {isAuthenticated && !isAdmin && (
             <>
@@ -179,6 +198,14 @@ const Navbar = () => {
                 className="block w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
               >
                 Mis Citas
+              </Link>
+              <Link
+                to="/cart"
+                onClick={() => setIsMobileMenuOpen(false)}
+                className="flex items-center justify-center gap-2 w-full text-center text-sm font-medium text-gray-700 py-2.5 rounded-xl hover:bg-gray-100 transition-all"
+              >
+                <ShoppingCart size={18} />
+                Carrito
               </Link>
             </>
           )}

@@ -6,11 +6,13 @@ import { useAuthStore } from "../../stores/authStore";
 
 const ServicesSection = () => {
     const navigate = useNavigate();
-    const { isAuthenticated } = useAuthStore();
+    const { user, isAuthenticated } = useAuthStore();
     const [services, setServices] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [activeTab, setActiveTab] = useState("ALL");
+    
+    const isAdmin = user?.role === "ADMIN";
   
     useEffect(() => {
       fetchServices();
@@ -185,6 +187,7 @@ const ServicesSection = () => {
                     {/* Reserve Button */}
                     <button
                       onClick={() => handleReserve(service.id)}
+                      hidden={isAdmin}
                       className="mt-4 w-full flex items-center justify-center gap-2 bg-[#E91E63] text-white px-4 py-3 rounded-xl font-semibold hover:bg-[#d81b60] transition-all shadow-sm hover:shadow-md active:scale-95"
                     >
                       <Calendar size={18} />
