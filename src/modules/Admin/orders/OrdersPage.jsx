@@ -39,6 +39,8 @@ const OrdersPage = () => {
       setDetailLoading(true);
       const { data } = await api.get(`/orders/${orderId}`);
       setSelectedOrder(data);
+      console.log(data);
+      
     } catch {
       toast.error("No se pudo cargar el detalle de la orden");
     } finally {
@@ -223,7 +225,7 @@ const OrdersPage = () => {
                   <p className="text-gray-700">
                     Total:{" "}
                     <span className="font-semibold">
-                      S/. {selectedOrder.total.toFixed(2)}
+                      S/. {Number(selectedOrder.total).toFixed(2)}
                     </span>
                   </p>
 
