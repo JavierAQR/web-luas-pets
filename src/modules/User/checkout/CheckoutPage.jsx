@@ -1,7 +1,6 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  CreditCard,
   MapPin,
   User,
   Mail,
@@ -9,17 +8,19 @@ import {
   Loader2,
   AlertCircle,
   ChevronLeft,
-  Lock,
 } from "lucide-react";
-import { api } from "../../../services/api";
 import toast from "react-hot-toast";
+import { api } from "../../../services/api";
 
 const CheckoutPage = () => {
   const navigate = useNavigate();
+  const paypalRef = useRef();
   const [cart, setCart] = useState(null);
   const [loading, setLoading] = useState(true);
   const [processing, setProcessing] = useState(false);
   const [error, setError] = useState(null);
+  const [paypalLoaded, setPaypalLoaded] = useState(false);
+  const backendOrderId = useRef(null);
 
   const [shippingInfo, setShippingInfo] = useState({
     fullName: "",
@@ -33,7 +34,32 @@ const CheckoutPage = () => {
 
   useEffect(() => {
     fetchCart();
+    loadPayPalScript();
   }, []);
+
+  const loadPayPalScript = () => {
+    // Reemplaza con tu Client ID de PayPal
+    const PAYPAL_CLIENT_ID = "AZI4NjEvyLgQYTTZ1s_EmTmo-HAp4DtKaVnzc7h8Ea30gAmLH4aNs35yJYtYmJIH_CBjh3O9d2oBQCy-";
+    
+    if (window.paypal) {
+      setPaypalLoaded(true);
+      return;
+    }
+
+    const script = document.createElement("script");
+    script.src = `https://www.paypal.com/sdk/js?client-id=${PAYPAL_CLIENT_ID}&currency=USD`;
+    script.addEventListener("load", () => setPaypalLoaded(true));
+    script.addEventListener("error", () => {
+      toast.error("Error al cargar PayPal");
+    });
+    document.body.appendChild(script);
+  };
+
+  useEffect(() => {
+    if (paypalLoaded && cart && cart.items?.length > 0 && shippingInfo.fullName) {
+      renderPayPalButton();
+    }
+  }, [paypalLoaded, cart, shippingInfo]);
 
   const fetchCart = async () => {
     try {
@@ -66,25 +92,104 @@ const CheckoutPage = () => {
     }, 0);
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Validación básica
-    if (!shippingInfo.fullName || !shippingInfo.email || !shippingInfo.phone || !shippingInfo.address) {
+  const validateForm = () => {
+    if (!shippingInfo.fullName || !shippingInfo.email || !shippingInfo.phone || !shippingInfo.address || !shippingInfo.city) {
       toast.error("Por favor completa todos los campos obligatorios");
-      return;
+      return false;
+    }
+    return true;
+  };
+
+  const createOrder = async () => {
+    if (!validateForm()) {
+      throw new Error("Formulario incompleto");
     }
 
-    setProcessing(true);
+    try {
+      const { data } = await api.post("/orders", shippingInfo);
+      backendOrderId.current = data.id;
+      return data.id; // Retorna el ID de la orden creada
+    } catch (err) {
+      const message = err?.response?.data?.message || "Error al crear la orden";
+      toast.error(message);
+      throw err;
+    }
+  };
 
-    // Aquí se integrará PayPal
-    // Por ahora mostramos un mensaje
-    setTimeout(() => {
-      setProcessing(false);
-      toast.info("Integración con PayPal pendiente");
-      console.log("Datos de envío:", shippingInfo);
-      console.log("Total a pagar:", calculateTotal());
-    }, 2000);
+  const renderPayPalButton = () => {
+    if (!paypalRef.current) return;
+    
+    // Limpiar botones previos
+    paypalRef.current.innerHTML = "";
+
+    const total = calculateTotal();
+
+    window.paypal.Buttons({
+      style: {
+        layout: 'vertical',
+        color: 'blue',
+        shape: 'rect',
+        label: 'pay'
+      },
+      
+      createOrder: async (data, actions) => {
+        try {
+          setProcessing(true);
+          
+          // Crear orden en tu backend
+          const orderId = await createOrder();
+          
+          // Crear orden en PayPal
+          return actions.order.create({
+            purchase_units: [{
+              amount: {
+                value: total.toFixed(2),
+                currency_code: 'USD'
+              },
+              description: `Orden #${orderId.slice(0, 8)}`
+            }]
+          });
+        } catch (err) {
+          setProcessing(false);
+          throw err;
+        }
+      },
+      
+      onApprove: async (data, actions) => {
+        try {
+          // Capturar el pago
+          const details = await actions.order.capture();
+          
+          await api.patch(`/orders/${backendOrderId.current}/complete`, { 
+            paypalOrderId: details.id 
+          });
+          
+          setProcessing(false);
+          toast.success("¡Pago completado exitosamente!");
+          
+          // Redirigir a página de éxito
+          navigate("/order-success", { 
+            state: { 
+              orderDetails: details 
+            } 
+          });
+        } catch (err) {
+          setProcessing(false);
+          toast.error("Error al procesar el pago");
+        }
+      },
+      
+      onError: (err) => {
+        setProcessing(false);
+        console.error("Error de PayPal:", err);
+        toast.error("Error al procesar el pago");
+      },
+      
+      onCancel: () => {
+        setProcessing(false);
+        toast.info("Pago cancelado");
+      }
+    }).render(paypalRef.current);
   };
 
   if (loading) {
@@ -101,6 +206,7 @@ const CheckoutPage = () => {
   }
 
   const total = calculateTotal();
+  const isFormValid = shippingInfo.fullName && shippingInfo.email && shippingInfo.phone && shippingInfo.address && shippingInfo.city;
 
   return (
     <div className="min-h-screen bg-gray-50 pt-24 pb-16">
@@ -133,7 +239,7 @@ const CheckoutPage = () => {
           </div>
         )}
 
-        <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
           {/* Shipping Info */}
           <div className="lg:col-span-2 space-y-6">
             {/* Contact Information */}
@@ -264,40 +370,16 @@ const CheckoutPage = () => {
                 </div>
               </div>
             </div>
-
-            {/* Payment Method - PayPal Placeholder */}
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
-                <CreditCard size={20} className="text-[#0D47A1]" />
-                Método de Pago
-              </h2>
-
-              <div className="p-6 bg-blue-50 border-2 border-blue-200 rounded-xl text-center">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <Lock size={32} className="text-blue-600" />
-                </div>
-                <p className="text-sm text-gray-700 mb-2">
-                  El pago se procesará de forma segura a través de
-                </p>
-                <div className="inline-flex items-center gap-2 bg-white px-6 py-3 rounded-lg border border-blue-200">
-                  <span className="text-2xl font-bold text-[#003087]">Pay</span>
-                  <span className="text-2xl font-bold text-[#009cde]">Pal</span>
-                </div>
-                <p className="text-xs text-gray-500 mt-4">
-                  Integración pendiente - Será configurada próximamente
-                </p>
-              </div>
-            </div>
           </div>
 
           {/* Order Summary */}
           <div className="lg:col-span-1">
-            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24">
-              <h2 className="text-lg font-semibold text-gray-900 mb-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 sticky top-24 space-y-6">
+              <h2 className="text-lg font-semibold text-gray-900">
                 Resumen del Pedido
               </h2>
 
-              <div className="space-y-3 mb-6 max-h-60 overflow-y-auto">
+              <div className="space-y-3 max-h-60 overflow-y-auto">
                 {cart?.items.map((item) => (
                   <div key={item.id} className="flex gap-3 pb-3 border-b border-gray-100 last:border-0">
                     <img
@@ -320,7 +402,7 @@ const CheckoutPage = () => {
                 ))}
               </div>
 
-              <div className="space-y-3 mb-6 pt-4 border-t">
+              <div className="space-y-3 pt-4 border-t">
                 <div className="flex justify-between text-sm">
                   <span className="text-gray-600">Subtotal</span>
                   <span className="font-medium">S/. {total.toFixed(2)}</span>
@@ -337,30 +419,40 @@ const CheckoutPage = () => {
                 </div>
               </div>
 
-              <button
-                type="submit"
-                disabled={processing}
-                className="w-full bg-[#0D47A1] text-white px-6 py-3 rounded-xl font-semibold hover:bg-[#0d3a7a] transition-all shadow-md hover:shadow-lg active:scale-95 disabled:opacity-60 disabled:cursor-not-allowed flex items-center justify-center gap-2"
-              >
-                {processing ? (
-                  <>
-                    <Loader2 size={20} className="animate-spin" />
-                    Procesando...
-                  </>
-                ) : (
-                  <>
-                    <Lock size={20} />
-                    Proceder al Pago
-                  </>
-                )}
-              </button>
+              {/* PayPal Button */}
+              {!isFormValid && (
+                <div className="p-4 bg-yellow-50 border border-yellow-200 rounded-xl">
+                  <p className="text-sm text-yellow-800 font-medium">
+                    ⚠️ Completa todos los campos obligatorios para continuar
+                  </p>
+                </div>
+              )}
 
-              <p className="text-xs text-gray-500 text-center mt-4">
-                🔒 Pago 100% seguro y encriptado
+              {isFormValid && (
+                <div>
+                  {!paypalLoaded ? (
+                    <div className="flex items-center justify-center py-8">
+                      <Loader2 className="animate-spin text-[#0D47A1]" size={32} />
+                    </div>
+                  ) : (
+                    <div ref={paypalRef} className={processing ? "opacity-50 pointer-events-none" : ""} />
+                  )}
+                  
+                  {processing && (
+                    <div className="flex items-center justify-center gap-2 mt-4">
+                      <Loader2 className="animate-spin text-[#0D47A1]" size={20} />
+                      <span className="text-sm text-gray-600">Procesando pago...</span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              <p className="text-xs text-gray-500 text-center">
+                🔒 Pago 100% seguro con PayPal
               </p>
             </div>
           </div>
-        </form>
+        </div>
       </div>
     </div>
   );
