@@ -2,7 +2,16 @@ import { useState } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/authStore";
 import toast from "react-hot-toast";
-import { Calendar, LayoutDashboard, LogOut, Menu, Package, Sparkles, X } from "lucide-react";
+import {
+  Calendar,
+  LayoutDashboard,
+  LogOut,
+  Menu,
+  Package,
+  ScrollText,
+  Sparkles,
+  X,
+} from "lucide-react";
 
 const AdminSidebar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -22,7 +31,9 @@ const AdminSidebar = () => {
       {/* Botón hamburguesa móvil */}
       <button
         onClick={toggleSidebar}
-        className={`md:hidden fixed w-full bg-white hover:bg-gray-50 shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${isOpen && "hidden"}`}
+        className={`md:hidden fixed w-full bg-white hover:bg-gray-50 shadow-lg p-3 border border-gray-200 transition-all active:scale-95 ${
+          isOpen && "hidden"
+        }`}
         aria-label="Abrir menú"
       >
         <Menu size={24} className="text-gray-700" />
@@ -46,9 +57,9 @@ const AdminSidebar = () => {
           <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
             <Link to="/" className="flex items-center gap-3 group">
               <div className="relative">
-                <img 
-                  src="/logo-luaspets.png" 
-                  className="h-11 w-11 object-contain transition-transform group-hover:scale-105" 
+                <img
+                  src="/logo-luaspets.png"
+                  className="h-11 w-11 object-contain transition-transform group-hover:scale-105"
                   alt="Logo"
                 />
                 <div className="absolute -top-1 -right-1 w-3 h-3 bg-green-500 rounded-full border-2 border-white"></div>
@@ -57,12 +68,14 @@ const AdminSidebar = () => {
                 <h1 className="text-base font-bold text-[#0D47A1] leading-tight">
                   LUAS PETS
                 </h1>
-                <span className="text-xs text-gray-500 font-medium">Panel Administrativo</span>
+                <span className="text-xs text-gray-500 font-medium">
+                  Panel Administrativo
+                </span>
               </div>
             </Link>
 
-            <button 
-              className="md:hidden text-gray-400 hover:text-gray-600 transition-colors p-1" 
+            <button
+              className="md:hidden text-gray-400 hover:text-gray-600 transition-colors p-1"
               onClick={toggleSidebar}
               aria-label="Cerrar menú"
             >
@@ -74,10 +87,13 @@ const AdminSidebar = () => {
           <div className="mx-4 my-4 p-4 rounded-xl bg-linear-to-br from-[#E91E63]/5 to-[#E91E63]/10 border border-[#E91E63]/20">
             <div className="flex items-center gap-3">
               <div className="w-11 h-11 rounded-full bg-linear-to-br from-[#E91E63] to-[#C2185B] flex items-center justify-center text-white font-bold text-lg shadow-md">
-                {user?.name?.[0]}{user?.lastname?.[0]}
+                {user?.name?.[0]}
+                {user?.lastname?.[0]}
               </div>
               <div className="flex-1 min-w-0">
-                <p className="text-xs text-gray-500 font-medium mb-0.5">Conectado como</p>
+                <p className="text-xs text-gray-500 font-medium mb-0.5">
+                  Conectado como
+                </p>
                 <p className="text-sm font-semibold text-gray-900 truncate">
                   {user?.name} {user?.lastname}
                 </p>
@@ -93,7 +109,7 @@ const AdminSidebar = () => {
 
           {/* Navigation */}
           <nav className="flex-1 overflow-y-auto px-4 py-2 space-y-1.5">
-          <NavLink
+            <NavLink
               to="/admin/dashboard"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
@@ -107,9 +123,13 @@ const AdminSidebar = () => {
             >
               {({ isActive }) => (
                 <>
-                  <LayoutDashboard 
-                    size={20} 
-                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  <LayoutDashboard
+                    size={20}
+                    className={
+                      isActive
+                        ? "text-white"
+                        : "text-[#E91E63] group-hover:scale-110 transition-transform"
+                    }
                   />
                   <span>Dashboard</span>
                   {isActive && (
@@ -118,7 +138,7 @@ const AdminSidebar = () => {
                 </>
               )}
             </NavLink>
-          <NavLink
+            <NavLink
               to="/admin/appointments"
               onClick={() => setIsOpen(false)}
               className={({ isActive }) =>
@@ -132,9 +152,13 @@ const AdminSidebar = () => {
             >
               {({ isActive }) => (
                 <>
-                  <Calendar 
-                    size={20} 
-                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  <Calendar
+                    size={20}
+                    className={
+                      isActive
+                        ? "text-white"
+                        : "text-[#E91E63] group-hover:scale-110 transition-transform"
+                    }
                   />
                   <span>Citas</span>
                   {isActive && (
@@ -157,9 +181,13 @@ const AdminSidebar = () => {
             >
               {({ isActive }) => (
                 <>
-                  <Sparkles 
-                    size={20} 
-                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  <Sparkles
+                    size={20}
+                    className={
+                      isActive
+                        ? "text-white"
+                        : "text-[#E91E63] group-hover:scale-110 transition-transform"
+                    }
                   />
                   <span>Servicios</span>
                   {isActive && (
@@ -183,11 +211,44 @@ const AdminSidebar = () => {
             >
               {({ isActive }) => (
                 <>
-                  <Package 
-                    size={20} 
-                    className={isActive ? "text-white" : "text-[#E91E63] group-hover:scale-110 transition-transform"} 
+                  <Package
+                    size={20}
+                    className={
+                      isActive
+                        ? "text-white"
+                        : "text-[#E91E63] group-hover:scale-110 transition-transform"
+                    }
                   />
                   <span>Productos</span>
+                  {isActive && (
+                    <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white"></div>
+                  )}
+                </>
+              )}
+            </NavLink>
+            <NavLink
+              to="/admin/orders"
+              onClick={() => setIsOpen(false)}
+              className={({ isActive }) =>
+                `flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-medium transition-all group
+                ${
+                  isActive
+                    ? "bg-linear-to-r from-[#E91E63] to-[#C2185B] text-white shadow-md shadow-[#E91E63]/30"
+                    : "text-gray-700 hover:bg-gray-100 hover:translate-x-1"
+                }`
+              }
+            >
+              {({ isActive }) => (
+                <>
+                 <ScrollText
+                    size={20}
+                    className={
+                      isActive
+                        ? "text-white"
+                        : "text-[#E91E63] group-hover:scale-110 transition-transform"
+                    }
+                  />
+                  <span>Órdenes</span>
                   {isActive && (
                     <div className="ml-auto w-1.5 h-1.5 rounded-full bg-white"></div>
                   )}
@@ -202,7 +263,10 @@ const AdminSidebar = () => {
               onClick={handleLogout}
               className="w-full flex items-center justify-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-xl py-3 font-medium transition-all active:scale-95 group"
             >
-              <LogOut size={18} className="group-hover:-translate-x-0.5 transition-transform" />
+              <LogOut
+                size={18}
+                className="group-hover:-translate-x-0.5 transition-transform"
+              />
               Cerrar sesión
             </button>
 

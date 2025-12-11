@@ -24,6 +24,8 @@ import CartPage from "./modules/User/cart/CartPage";
 import CheckoutPage from "./modules/User/checkout/CheckoutPage";
 import MyOrdersPage from "./modules/User/checkout/MyOrdersPage";
 import OrderSuccessPage from "./modules/User/checkout/OrderSuccessPage";
+import OrdersPage from "./modules/Admin/orders/OrdersPage";
+
 
 function App() {
   return (
@@ -58,6 +60,7 @@ function App() {
           <Route path="services" element={<ServicesPage />} />
           <Route path="products" element={<ProductsPage />} />
           <Route path="appointments" element={<AppointmentsPage/>}/>
+          <Route path="orders" element={<OrdersPage />}/>
         </Route>
       </Routes>
     </Router>

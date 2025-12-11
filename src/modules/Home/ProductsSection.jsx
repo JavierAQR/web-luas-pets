@@ -66,7 +66,7 @@ const ProductsSection = () => {
 
   if (loading) {
     return (
-      <section className="py-16 bg-white" id="productos">
+      <section className="py-16" id="productos">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex flex-col items-center justify-center py-16">
             <Loader2 className="animate-spin text-[#E91E63] mb-4" size={40} />
