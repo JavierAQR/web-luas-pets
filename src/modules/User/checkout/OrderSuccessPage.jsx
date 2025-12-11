@@ -61,11 +61,11 @@ const OrderSuccessPage = () => {
             </div>
   
             {/* Info Message */}
-            <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
+            {/* <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 mb-8">
               <p className="text-sm text-blue-800">
                 📧 Hemos enviado un correo de confirmación a tu email con todos los detalles de tu pedido.
               </p>
-            </div>
+            </div> */}
   
             {/* Actions */}
             <div className="flex flex-col sm:flex-row gap-3 justify-center">
